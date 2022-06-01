@@ -10,8 +10,8 @@ defmodule OauthServer.ClientTest do
 
   describe "dev user creation" do
     test "can create a dev user", %{base_url: base_url} do
-      {:ok, %{status: 200, body: %{client_id: client_id, client_secret: client_secret}}} = HTTPX.post(base_url <> "/client", {:json, %{}}, fail: true, format: :json_atoms)
+      {:ok, %{status: 200, body: %{client_id: client_id, client_secret: client_secret}}} =
+        HTTPX.post(base_url <> "/client", {:json, %{}}, fail: true, format: :json_atoms)
     end
   end
-
 end

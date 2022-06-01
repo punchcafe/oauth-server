@@ -1,18 +1,17 @@
-defmodule OauthImplementation do
+defmodule OAuthServer do
   @moduledoc """
   Documentation for `OauthImplementation`.
   """
 
-  @doc """
-  Hello world.
+  def start(_, _) do
+    port = Application.fetch_env!(:oauth_server, :port)
 
-  ## Examples
+    children = [
+      {Plug.Cowboy, scheme: :http, plug: OAuthServer.Router, options: [port: port]},
+      OAuthServer.Repo
+    ]
 
-      iex> OauthImplementation.hello()
-      :world
-
-  """
-  def hello do
-    :world
+    opts = [strategy: :one_for_one, name: OAuthServer.Supervisor]
+    Supervisor.start_link(children, opts)
   end
 end
