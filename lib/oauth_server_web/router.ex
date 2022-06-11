@@ -18,4 +18,12 @@ defmodule OAuthServer.Router do
       {:error, err} -> send_resp(conn, 400, Jason.encode!(%{error: err}))
     end
   end
+
+  post "/client/:client_id/url_whitelist" do
+    %{"whitelist_url" => url, "client_id" => id} = conn.params
+    case ClientService.whitelist_url(id, url) do
+      :ok -> send_resp(conn, 200, Jason.encode!(%{}))
+      {:error, err} -> send_resp(conn, 400, Jason.encode!(%{error: err}))
+    end
+  end
 end
