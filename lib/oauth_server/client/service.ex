@@ -2,10 +2,9 @@ defmodule OAuthServer.Client.Service do
   require Logger
   alias OAuthServer.Client.ORM
   alias OAuthServer.Client.Whitelist.ORM, as: WhitelistORM
+  alias OAuthServer.Repo
 
   @secret_size 128
-
-  alias OAuthServer.Repo
 
   def create() do
     id = UUID.uuid1()

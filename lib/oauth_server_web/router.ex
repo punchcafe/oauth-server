@@ -3,6 +3,7 @@ defmodule OAuthServer.Router do
   use Plug.Router
 
   alias OAuthServer.Client.Service, as: ClientService
+  alias OAuthServer.User.Service, as: UserService
 
   plug(Plug.Parsers,
     parsers: [:urlencoded, :json],
@@ -11,6 +12,14 @@ defmodule OAuthServer.Router do
 
   plug(:match)
   plug(:dispatch)
+
+  post "/user" do
+    %{"username" => username, "password" => password} = conn.params
+    case UserService.create(username, password) do
+      {:ok, %{username: username}} -> send_resp(conn, 200, Jason.encode!(%{username: username}))
+      {:error, err} -> send_resp(conn, 400, Jason.encode!(%{error: err}))
+    end
+  end
 
   post "/client" do
     case ClientService.create() do
