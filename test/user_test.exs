@@ -11,7 +11,12 @@ defmodule OauthServer.UserTest do
   describe "dev user creation" do
     test "can create a user", %{base_url: base_url} do
       assert {:ok, %{status: 200, body: %{username: "user_name"}}} =
-        HTTPX.post(base_url <> "/user", {:json, %{username: "user_name", password: "password"}}, fail: true, format: :json_atoms)
+               HTTPX.post(
+                 base_url <> "/user",
+                 {:json, %{username: "user_name", password: "password"}},
+                 fail: true,
+                 format: :json_atoms
+               )
     end
   end
 end

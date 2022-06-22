@@ -6,5 +6,4 @@ defmodule OAuthServer.Client.Whitelist.ORM do
     field(:url, :string)
     belongs_to(:client, ClientORM, references: :id, type: :string)
   end
-
 end

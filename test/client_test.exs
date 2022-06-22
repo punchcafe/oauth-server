@@ -11,7 +11,7 @@ defmodule OauthServer.ClientTest do
   describe "dev user creation" do
     test "can create a dev user", %{base_url: base_url} do
       assert {:ok, %{status: 200, body: %{client_id: client_id, client_secret: client_secret}}} =
-        HTTPX.post(base_url <> "/client", {:json, %{}}, fail: true, format: :json_atoms)
+               HTTPX.post(base_url <> "/client", {:json, %{}}, fail: true, format: :json_atoms)
     end
   end
 
@@ -20,7 +20,12 @@ defmodule OauthServer.ClientTest do
       {:ok, %{status: 200, body: %{client_id: client_id}}} =
         HTTPX.post(base_url <> "/client", {:json, %{}}, fail: true, format: :json_atoms)
 
-      assert {:ok, %{status: 200}} = HTTPX.post(base_url <> "/client/" <> client_id <> "/url_whitelist", {:json, %{client_id: client_id, whitelist_url: "https://www.helloworld.com/my_path"}})
+      assert {:ok, %{status: 200}} =
+               HTTPX.post(
+                 base_url <> "/client/" <> client_id <> "/url_whitelist",
+                 {:json,
+                  %{client_id: client_id, whitelist_url: "https://www.helloworld.com/my_path"}}
+               )
     end
   end
 end
